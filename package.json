@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nodemon --config nodemon.json",
@@ -23,7 +23,8 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:generate": "npm run typeorm -- migration:generate -n",
     "typeorm:migration:run": "npm run typeorm -- migration:run",
-    "postinstall": "yarn run start:prod"
+    "prestart:prod": "rimraf dist && yarn run build",
+    "postinstall": "yarn run build"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
