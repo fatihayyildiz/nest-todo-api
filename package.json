@@ -23,9 +23,7 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:create": "yarn run typeorm -- migration:create -n",
     "typeorm:migration:generate": "yarn run typeorm -- migration:generate -n",
-    "typeorm:migration:run": "yarn run typeorm -- migration:run",
-    "prestart:prod": "rimraf dist && yarn run build",
-    "postinstall": "yarn run build"
+    "typeorm:migration:run": "yarn run typeorm -- migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
