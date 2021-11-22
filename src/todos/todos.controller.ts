@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { TodoDTO } from './todo.dto';
 import { User } from '../user.decorator';
@@ -18,5 +18,10 @@ export class TodosController {
     @Body() dto: TodoDTO,
   ): Promise<TodoDTO> {
     return this.todoService.create(dto, user);
+  }
+
+  @Put()
+  public async put(@User() user: User, @Body() dto: TodoDTO): Promise<TodoDTO> {
+    return this.todoService.updateById(dto, user);
   }
 }

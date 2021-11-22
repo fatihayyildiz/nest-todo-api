@@ -49,6 +49,7 @@ export class TodoDTO implements Readonly<TodoDTO> {
     it.completed = dto.completed;
     it.isActive = dto.isActive;
     it.createDateTime = new Date();
+    it.lastChangedDateTime = dto.lastChangedDateTime;
     it.createdBy = user ? user.id : null;
     it.lastChangedBy = user ? user.id : null;
     return it;

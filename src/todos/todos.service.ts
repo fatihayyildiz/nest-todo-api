@@ -23,4 +23,14 @@ export class TodosService {
       .save(TodoDTO.toEntity(dto, user))
       .then((e) => TodoDTO.fromEntity(e));
   }
+
+  public async updateById(dto: TodoDTO, user: User): Promise<TodoDTO> {
+    const foundProperty = await this.todosRepository.findOne({
+      where: { id: dto.id },
+    });
+
+    return this.todosRepository
+      .save({ ...foundProperty, ...TodoDTO.toEntity(dto, user) })
+      .then((e) => TodoDTO.fromEntity(e));
+  }
 }
