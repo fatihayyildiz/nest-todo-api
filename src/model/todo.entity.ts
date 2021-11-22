@@ -8,4 +8,7 @@ export class Todo extends BaseEntity {
 
   @Column({ default: false })
   completed: boolean;
+
+  @Column({ default: true })
+  isActive: boolean;
 }

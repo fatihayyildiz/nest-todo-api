@@ -12,11 +12,15 @@ export class TodoDTO implements Readonly<TodoDTO> {
   @IsBoolean()
   completed: boolean;
 
+  @IsBoolean()
+  isActive: boolean;
+
   public static from(dto: Partial<TodoDTO>) {
     const it = new TodoDTO();
     it.id = dto.id;
     it.text = dto.text;
     it.completed = dto.completed;
+    it.isActive = dto.isActive;
     return it;
   }
 
@@ -25,6 +29,7 @@ export class TodoDTO implements Readonly<TodoDTO> {
       id: entity.id,
       text: entity.text,
       completed: entity.completed,
+      isActive: entity.isActive,
     });
   }
 
@@ -32,6 +37,7 @@ export class TodoDTO implements Readonly<TodoDTO> {
     const it = new Todo();
     it.text = dto.text;
     it.completed = dto.completed;
+    it.isActive = dto.isActive;
     it.createDateTime = new Date();
     it.createdBy = user ? user.id : null;
     it.lastChangedBy = user ? user.id : null;
