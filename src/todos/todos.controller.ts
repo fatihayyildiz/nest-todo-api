@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Put } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { TodoDTO } from './todo.dto';
 import { User } from '../user.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('todo')
 @Controller('todo')
 export class TodosController {
   constructor(private readonly todoService: TodosService) {}

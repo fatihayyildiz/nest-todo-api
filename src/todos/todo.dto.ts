@@ -1,23 +1,43 @@
 import { IsString, IsBoolean, IsNumber, IsDate } from 'class-validator';
 import { Todo } from '../model/todo.entity';
 import { User } from '../user.decorator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class TodoDTO implements Readonly<TodoDTO> {
   @IsNumber()
   id: number;
 
+  @ApiProperty({
+    description: 'Detail of todo description',
+  })
   @IsString()
   text: string;
 
+  @ApiProperty({
+    description: 'Status of todo. Default is false',
+    required: false,
+    type: Boolean,
+  })
   @IsBoolean()
   completed: boolean;
 
+  @ApiProperty({
+    description: 'Visibility status of todo. Default is true',
+    required: false,
+    type: Boolean,
+  })
   @IsBoolean()
   isActive: boolean;
 
   @IsDate()
   createDateTime: Date;
 
+  @ApiProperty({
+    description:
+      'Last updated time of todo. Changes when todo set completed or not',
+    required: false,
+    type: Date,
+  })
   @IsDate()
   lastChangedDateTime: Date;
 
