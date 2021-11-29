@@ -12,6 +12,7 @@ import RegisterDto from './register.dto';
 import { LocalAuthenticationGuard } from './passport/localAuthentication.guard';
 import RequestWithUser from './passport/requestWithUser.interface';
 import { UserDTO } from '../users/user.dto';
+import LoginDto from './login.dto';
 
 @ApiTags('authentication')
 @Controller('authentication')
@@ -26,7 +27,7 @@ export class AuthenticationController {
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
-  async logIn(@Req() request: RequestWithUser) {
+  async logIn(@Body() loginData: LoginDto, @Req() request: RequestWithUser) {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
     request.res.setHeader('Set-Cookie', cookie);
