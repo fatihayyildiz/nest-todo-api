@@ -1,5 +1,12 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
+import User from './user.entity';
 
 @Entity({ name: 'todo' })
 export class Todo extends BaseEntity {
@@ -17,4 +24,7 @@ export class Todo extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   lastChangedDateTime: Date;
+
+  @ManyToOne(() => User, (user: User) => user.todos)
+  user: User;
 }

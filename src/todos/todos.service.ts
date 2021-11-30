@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from '../model/todo.entity';
 import { TodoDTO } from './todo.dto';
-import { User } from '../user.decorator';
+import User from '../model/user.entity';
 
 @Injectable()
 export class TodosService {
@@ -12,9 +12,9 @@ export class TodosService {
     private readonly todosRepository: Repository<Todo>,
   ) {}
 
-  getAll(): Promise<TodoDTO[]> {
+  getAll(user: User): Promise<TodoDTO[]> {
     return this.todosRepository
-      .find()
+      .find({ relations: ['user'], where: { user: { id: user.id } } })
       .then((items) => items.map((e) => TodoDTO.fromEntity(e)));
   }
 
@@ -28,9 +28,14 @@ export class TodosService {
     const foundProperty = await this.todosRepository.findOne({
       where: { id: dto.id },
     });
-
-    return this.todosRepository
-      .save({ ...foundProperty, ...TodoDTO.toEntity(dto, user) })
-      .then((e) => TodoDTO.fromEntity(e));
+    if (foundProperty)
+      return this.todosRepository
+        .save({ ...foundProperty, ...TodoDTO.toEntity(dto, user) })
+        .then((e) => TodoDTO.fromEntity(e));
+    else
+      throw new HttpException(
+        'Todo with provided id is not exists',
+        HttpStatus.BAD_REQUEST,
+      );
   }
 }

@@ -1,7 +1,7 @@
 import { IsString, IsBoolean, IsNumber, IsDate } from 'class-validator';
 import { Todo } from '../model/todo.entity';
-import { User } from '../user.decorator';
 import { ApiProperty } from '@nestjs/swagger';
+import User from '../model/user.entity';
 
 export class TodoDTO implements Readonly<TodoDTO> {
   @IsNumber()
@@ -41,6 +41,8 @@ export class TodoDTO implements Readonly<TodoDTO> {
   @IsDate()
   lastChangedDateTime: Date;
 
+  user: User;
+
   public static from(dto: Partial<TodoDTO>) {
     const it = new TodoDTO();
     it.id = dto.id;
@@ -49,6 +51,7 @@ export class TodoDTO implements Readonly<TodoDTO> {
     it.isActive = dto.isActive;
     it.createDateTime = dto.createDateTime;
     it.lastChangedDateTime = dto.lastChangedDateTime;
+    it.user = dto.user;
     return it;
   }
 
@@ -60,6 +63,7 @@ export class TodoDTO implements Readonly<TodoDTO> {
       isActive: entity.isActive,
       createDateTime: entity.createDateTime,
       lastChangedDateTime: entity.lastChangedDateTime,
+      user: entity.user,
     });
   }
 
@@ -70,8 +74,9 @@ export class TodoDTO implements Readonly<TodoDTO> {
     it.isActive = dto.isActive;
     it.createDateTime = new Date();
     it.lastChangedDateTime = dto.lastChangedDateTime;
-    it.createdBy = user ? user.id : null;
-    it.lastChangedBy = user ? user.id : null;
+    it.createdBy = user ? user.email : null;
+    it.lastChangedBy = user ? user.email : null;
+    it.user = user;
     return it;
   }
 }

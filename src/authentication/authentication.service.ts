@@ -25,7 +25,6 @@ export class AuthenticationService {
       );
       return UserDTO.fromEntity(createdUser);
     } catch (error) {
-      console.log('register error:', error);
       if (error?.code === PostgresErrorCode.UniqueViolation) {
         throw new HttpException(
           'User with that email already exists',
